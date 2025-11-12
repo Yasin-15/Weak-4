@@ -1,0 +1,207 @@
+/* OrderConfirmation Styles */
+.order-confirmation-page {
+  min-height: calc(100vh - 200px);
+  padding: var(--spacing-xl) var(--spacing-md);
+  background-color: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.order-confirmation-container {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  background-color: var(--surface);
+  padding: var(--spacing-xl);
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Success icon with animation */
+.order-confirmation-icon {
+  margin: 0 auto var(--spacing-lg);
+  width: 100px;
+  height: 100px;
+}
+
+.checkmark {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: var(--success);
+  stroke-miterlimit: 10;
+  animation: fill 0.4s ease-in-out 0.4s forwards, scale 0.3s ease-in-out 0.9s both;
+}
+
+.checkmark-circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: var(--success);
+  fill: none;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes scale {
+  0%, 100% {
+    transform: none;
+  }
+  50% {
+    transform: scale3d(1.1, 1.1, 1);
+  }
+}
+
+@keyframes fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 30px var(--success);
+  }
+}
+
+/* Text content */
+.order-confirmation-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--success);
+  margin-bottom: var(--spacing-sm);
+}
+
+.order-confirmation-message {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.6;
+}
+
+/* Order details */
+.order-confirmation-details {
+  background-color: var(--background);
+  padding: var(--spacing-md);
+  border-radius: 8px;
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid #e0e0e0;
+}
+
+.order-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xs) 0;
+}
+
+.order-detail-row:not(:last-child) {
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: var(--spacing-xs);
+  padding-bottom: var(--spacing-sm);
+}
+
+.order-detail-label {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.order-detail-value {
+  font-size: 1rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+.order-total {
+  font-size: 1.25rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* Continue shopping button */
+.continue-shopping-btn {
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--primary);
+  color: white;
+  font-size: 1.125rem;
+  font-weight: 700;
+  border-radius: 8px;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.continue-shopping-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+}
+
+.continue-shopping-btn:active {
+  transform: translateY(0);
+}
+
+/* Tablet Styles */
+@media (max-width: 1024px) {
+  .order-confirmation-page {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .order-confirmation-container {
+    max-width: 500px;
+    padding: var(--spacing-lg);
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 640px) {
+  .order-confirmation-page {
+    padding: var(--spacing-md);
+  }
+
+  .order-confirmation-container {
+    padding: var(--spacing-md);
+  }
+
+  .order-confirmation-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .order-confirmation-title {
+    font-size: 1.5rem;
+  }
+
+  .order-confirmation-message {
+    font-size: 1rem;
+  }
+
+  .order-detail-label,
+  .order-detail-value {
+    font-size: 0.9375rem;
+  }
+
+  .order-total {
+    font-size: 1.125rem;
+  }
+
+  .continue-shopping-btn {
+    font-size: 1rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}

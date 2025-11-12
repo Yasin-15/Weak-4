@@ -1,0 +1,142 @@
+[
+  {
+    "id": "p001",
+    "name": "Organic Apples",
+    "category": "fruits",
+    "price": 3.99,
+    "image": "/images/products/apples.jpg",
+    "description": "Fresh organic apples, crisp and sweet",
+    "stock": 50,
+    "unit": "lb"
+  },
+  {
+    "id": "p002",
+    "name": "Carrots",
+    "category": "vegetables",
+    "price": 2.49,
+    "image": "/images/products/carrots.jpg",
+    "description": "Crunchy orange carrots, perfect for snacking",
+    "stock": 8,
+    "unit": "lb"
+  },
+  {
+    "id": "p003",
+    "name": "Bananas",
+    "category": "fruits",
+    "price": 1.99,
+    "image": "/images/products/bananas.jpg",
+    "description": "Ripe yellow bananas, great source of potassium",
+    "stock": 75,
+    "unit": "lb"
+  },
+  {
+    "id": "p004",
+    "name": "Broccoli",
+    "category": "vegetables",
+    "price": 3.49,
+    "image": "/images/products/broccoli.jpg",
+    "description": "Fresh green broccoli crowns",
+    "stock": 30,
+    "unit": "lb"
+  },
+  {
+    "id": "p005",
+    "name": "Strawberries",
+    "category": "fruits",
+    "price": 4.99,
+    "image": "/images/products/strawberries.jpg",
+    "description": "Sweet and juicy strawberries",
+    "stock": 25,
+    "unit": "lb"
+  },
+  {
+    "id": "p006",
+    "name": "Bell Peppers",
+    "category": "vegetables",
+    "price": 2.99,
+    "image": "/images/products/bell-peppers.jpg",
+    "description": "Colorful bell peppers, mix of red, yellow, and green",
+    "stock": 40,
+    "unit": "lb"
+  },
+  {
+    "id": "p007",
+    "name": "Oranges",
+    "category": "fruits",
+    "price": 3.49,
+    "image": "/images/products/oranges.jpg",
+    "description": "Juicy navel oranges, packed with vitamin C",
+    "stock": 60,
+    "unit": "lb"
+  },
+  {
+    "id": "p008",
+    "name": "Spinach",
+    "category": "vegetables",
+    "price": 2.99,
+    "image": "/images/products/spinach.jpg",
+    "description": "Fresh baby spinach leaves",
+    "stock": 5,
+    "unit": "lb"
+  },
+  {
+    "id": "p009",
+    "name": "Grapes",
+    "category": "fruits",
+    "price": 4.49,
+    "image": "/images/products/grapes.jpg",
+    "description": "Seedless green grapes, sweet and refreshing",
+    "stock": 35,
+    "unit": "lb"
+  },
+  {
+    "id": "p010",
+    "name": "Tomatoes",
+    "category": "vegetables",
+    "price": 3.29,
+    "image": "/images/products/tomatoes.jpg",
+    "description": "Vine-ripened tomatoes, perfect for salads",
+    "stock": 45,
+    "unit": "lb"
+  },
+  {
+    "id": "p011",
+    "name": "Blueberries",
+    "category": "fruits",
+    "price": 5.99,
+    "image": "/images/products/blueberries.jpg",
+    "description": "Plump and sweet blueberries, rich in antioxidants",
+    "stock": 20,
+    "unit": "lb"
+  },
+  {
+    "id": "p012",
+    "name": "Cucumbers",
+    "category": "vegetables",
+    "price": 1.99,
+    "image": "/images/products/cucumbers.jpg",
+    "description": "Fresh crisp cucumbers, great for salads",
+    "stock": 55,
+    "unit": "lb"
+  },
+  {
+    "id": "p013",
+    "name": "Watermelon",
+    "category": "fruits",
+    "price": 6.99,
+    "image": "/images/products/watermelon.jpg",
+    "description": "Sweet and refreshing watermelon",
+    "stock": 15,
+    "unit": "each"
+  },
+  {
+    "id": "p014",
+    "name": "Lettuce",
+    "category": "vegetables",
+    "price": 2.49,
+    "image": "/images/products/lettuce.jpg",
+    "description": "Crisp romaine lettuce heads",
+    "stock": 7,
+    "unit": "each"
+  }
+]
