@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext(null);
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -17,16 +16,14 @@ export const AuthProvider = ({ children }) => {
 
   // Load user from localStorage on mount
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
     const userData = localStorage.getItem('userData');
     
-    if (token && userData) {
+    if (userData) {
       try {
         const parsedUser = JSON.parse(userData);
         setUser(parsedUser);
       } catch (error) {
         console.error('Failed to parse user data:', error);
-        localStorage.removeItem('authToken');
         localStorage.removeItem('userData');
       }
     }
@@ -35,49 +32,50 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
+      // Simulate async operation
+      await new Promise(resolve => setTimeout(resolve, 300));
+
       // Validation
       if (!email || !password) {
         throw new Error('Email and password are required');
       }
 
-      const response = await fetch(`${API_URL}/api/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
+      // Get stored users from localStorage
+      const storedUsers = JSON.parse(localStorage.getItem('users') || '[]');
+      
+      // Find user by email
+      const foundUser = storedUsers.find(u => u.email === email);
+      
+      if (!foundUser) {
+        throw new Error('Invalid email or password');
       }
 
-      const data = await response.json();
-      
-      // Store token and user data
-      const token = data.token;
+      // Check password (in real app, this would be hashed)
+      if (foundUser.password !== password) {
+        throw new Error('Invalid email or password');
+      }
+
+      // Create user data (without password)
       const userData = {
-        id: data._id,
-        name: data.name,
-        email: data.email
+        id: foundUser.id,
+        name: foundUser.name,
+        email: foundUser.email
       };
 
-      localStorage.setItem('authToken', token);
       localStorage.setItem('userData', JSON.stringify(userData));
       setUser(userData);
       
       return userData;
     } catch (error) {
-      if (error instanceof TypeError && error.message.includes('fetch')) {
-        throw new Error('Network error: Unable to connect to server. Please check your connection.');
-      }
       throw error;
     }
   };
 
   const signup = async (name, email, password) => {
     try {
+      // Simulate async operation
+      await new Promise(resolve => setTimeout(resolve, 300));
+
       // Validation
       if (!name || !email || !password) {
         throw new Error('All fields are required');
@@ -87,44 +85,44 @@ export const AuthProvider = ({ children }) => {
         throw new Error('Password must be at least 6 characters');
       }
 
-      const response = await fetch(`${API_URL}/api/auth/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name, email, password })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Signup failed');
+      // Get stored users from localStorage
+      const storedUsers = JSON.parse(localStorage.getItem('users') || '[]');
+      
+      // Check if user already exists
+      if (storedUsers.find(u => u.email === email)) {
+        throw new Error('User with this email already exists');
       }
 
-      const data = await response.json();
-      
-      // Store token and user data
-      const token = data.token;
-      const userData = {
-        id: data._id,
-        name: data.name,
-        email: data.email
+      // Create new user
+      const newUser = {
+        id: `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        name,
+        email,
+        password, // In real app, this would be hashed
+        createdAt: new Date().toISOString()
       };
 
-      localStorage.setItem('authToken', token);
+      // Add to stored users
+      storedUsers.push(newUser);
+      localStorage.setItem('users', JSON.stringify(storedUsers));
+
+      // Create user data (without password)
+      const userData = {
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email
+      };
+
       localStorage.setItem('userData', JSON.stringify(userData));
       setUser(userData);
       
       return userData;
     } catch (error) {
-      if (error instanceof TypeError && error.message.includes('fetch')) {
-        throw new Error('Network error: Unable to connect to server. Please check your connection.');
-      }
       throw error;
     }
   };
 
   const logout = () => {
-    localStorage.removeItem('authToken');
     localStorage.removeItem('userData');
     setUser(null);
   };

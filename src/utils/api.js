@@ -1,72 +1,34 @@
 /**
  * API utility for loading product data and managing orders
+ * Frontend-only implementation using local data
  */
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+import productsData from '../data/products.json';
 
 /**
- * Get authentication token from localStorage
- * @returns {string|null} JWT token or null
- */
-const getAuthToken = () => {
-  return localStorage.getItem('authToken');
-};
-
-/**
- * Create headers with authentication token if available
- * @returns {Object} Headers object
- */
-const getHeaders = () => {
-  const headers = {
-    'Content-Type': 'application/json'
-  };
-  
-  const token = getAuthToken();
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-  
-  return headers;
-};
-
-/**
- * Load products from the backend API
+ * Load products from local data
  * @returns {Promise<Array>} Array of product objects
  * @throws {Error} If data loading fails
  */
 export const loadProducts = async () => {
   try {
-    const response = await fetch(`${API_URL}/api/products`, {
-      method: 'GET',
-      headers: getHeaders()
-    });
+    // Simulate async operation
+    await new Promise(resolve => setTimeout(resolve, 100));
     
-    if (!response.ok) {
-      throw new Error(`Failed to load products: ${response.status} ${response.statusText}`);
-    }
-    
-    const products = await response.json();
-    
-    // Validate that we received an array
-    if (!Array.isArray(products)) {
+    // Validate that we have an array
+    if (!Array.isArray(productsData)) {
       throw new Error('Invalid product data format: expected an array');
     }
     
     // Validate each product has required fields
-    products.forEach((product, index) => {
+    productsData.forEach((product, index) => {
       if (!product.id || !product.name || !product.category || typeof product.price !== 'number') {
         throw new Error(`Invalid product at index ${index}: missing required fields`);
       }
     });
     
-    return products;
+    return productsData;
   } catch (error) {
-    // Re-throw with more context if it's a network error
-    if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error('Network error: Unable to load product data. Please check your connection.');
-    }
-    
-    // Re-throw the error for the caller to handle
     throw error;
   }
 };
@@ -105,57 +67,59 @@ export const getProductsByCategory = async (category) => {
 };
 
 /**
- * Create a new order
+ * Create a new order (stored in localStorage)
  * @param {Object} orderData - Order data including items, subtotal, tax, discount, total
  * @returns {Promise<Object>} Created order object
  * @throws {Error} If order creation fails
  */
 export const createOrder = async (orderData) => {
   try {
-    const response = await fetch(`${API_URL}/api/orders`, {
-      method: 'POST',
-      headers: getHeaders(),
-      body: JSON.stringify(orderData)
-    });
+    // Simulate async operation
+    await new Promise(resolve => setTimeout(resolve, 200));
     
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || `Failed to create order: ${response.status}`);
-    }
+    // Generate order ID
+    const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     
-    const order = await response.json();
+    // Create order object
+    const order = {
+      _id: orderId,
+      orderId,
+      ...orderData,
+      status: 'pending',
+      createdAt: new Date().toISOString()
+    };
+    
+    // Get existing orders from localStorage
+    const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+    
+    // Add new order
+    existingOrders.push(order);
+    
+    // Save to localStorage
+    localStorage.setItem('orders', JSON.stringify(existingOrders));
+    
     return order;
   } catch (error) {
-    if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error('Network error: Unable to create order. Please check your connection.');
-    }
-    throw error;
+    throw new Error(`Failed to create order: ${error.message}`);
   }
 };
 
 /**
- * Get user's order history
+ * Get user's order history from localStorage
  * @returns {Promise<Array>} Array of order objects
  * @throws {Error} If fetching orders fails
  */
 export const getUserOrders = async () => {
   try {
-    const response = await fetch(`${API_URL}/api/orders`, {
-      method: 'GET',
-      headers: getHeaders()
-    });
+    // Simulate async operation
+    await new Promise(resolve => setTimeout(resolve, 100));
     
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || `Failed to fetch orders: ${response.status}`);
-    }
+    // Get orders from localStorage
+    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
     
-    const orders = await response.json();
-    return orders;
+    // Sort by date (newest first)
+    return orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   } catch (error) {
-    if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error('Network error: Unable to fetch orders. Please check your connection.');
-    }
-    throw error;
+    throw new Error(`Failed to fetch orders: ${error.message}`);
   }
 };
